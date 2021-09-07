@@ -39,7 +39,7 @@ jobs:
       contents: write
     steps:
       - name: run-enforcer
-        uses: jci-internal/int-dsc-fusion-action-branch-name-enforcer@v1
+        uses: A5100907/branch-name-enforcer@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           ignore_branches: "master;main;teamshare;product_teamshare"
@@ -61,7 +61,7 @@ jobs:
       contents: write
     steps:
       - name: run-enforcer
-        uses: jci-internal/int-dsc-fusion-action-branch-name-enforcer@v1
+        uses: A5100907/branch-name-enforcer@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           ignore_branches: "master;main;teamshare;product_teamshare"
@@ -72,37 +72,37 @@ Both of these examples would enforce following:
 
   * Valid:
   ```
-  NEO-PROJECT/teamshare
-  NEO-PROJECT/feature/SDO-123456
-  NEO-PROJECT/feature/XXO-1
-  NEO-PROJECT/release/2.0.0
-  NEO-PROJECT/release/1.0.1
+  PROJECT/teamshare
+  PROJECT/feature/SDO-123456
+  PROJECT/feature/XXO-1
+  PROJECT/release/2.0.0
+  PROJECT/release/1.0.1
 
-  IQ2/teamshare
-  IQ2/feature/SDO-123456
-  IQ2/feature/XXO-1
-  IQ2/release/2.0.01234
-  IQ2/release/1.0.1
+  PRJ1/teamshare
+  PRJ1/feature/SDO-123456
+  PRJ1/feature/XXO-1
+  PRJ1/release/2.0.01234
+  PRJ1/release/1.0.1
 
-  IQ4/teamshare
-  IQ4/feature/SDO-123456_test
-  IQ4/feature/SDO-123456-test
-  IQ4/feature/SDO-123456_test
-  IQ4/feature/XXO-1
-  IQ4/release/2.0.0
-  IQ4/release/1.0.1
+  PRJ2/teamshare
+  PRJ2/feature/SDO-123456_test
+  PRJ2/feature/SDO-123456-test
+  PRJ2/feature/SDO-123456_test
+  PRJ2/feature/XXO-1
+  PRJ2/release/2.0.0
+  PRJ2/release/1.0.1
 
-  IQ9/teamshare
-  IQ9/feature/SDO-123456
-  IQ9/feature/XXO-1
+  PRJ9/teamshare
+  PRJ9/feature/SDO-123456
+  PRJ9/feature/XXO-1
   ```
 
   * Invalid:
   ```
   test_prefix/NEO-PROJECT/teamshare
   neo-project/teamshare
-  iq9/teamshare
-  IQ9/teamshare-random-suffix
-  IQ4/feature/SDO123456
-  IQ9/release/01.02.12345-random-suffix
+  Ex1/teamshare
+  prj2/teamshare-random-suffix
+  PRJ6/feature/SDO123456
+  ExAmPlE/release/01.02.12345-random-suffix
   ```
