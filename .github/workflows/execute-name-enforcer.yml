@@ -1,0 +1,24 @@
+# This action executes name enforcer on a created branch within this repo
+name: "Execute branch name enforcer"
+on:
+  create:
+
+jobs:
+  build:
+    name: "Build and run the app"
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Get the source"
+        uses: actions/checkout@v2
+      - name: "Get node dependencies"
+        run: npm ci
+      - name: "build source"
+        run: npm run build
+      - name: "run app"
+        uses: ./
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          ignore_branches: "main"
+          regex: "^((feature|hotfix|bugfix)/([A-Z]*-[0-9]{1,8}[-_a-zA-Z0-9]*))"
+          delete_branch: "true"
+              

@@ -1,0 +1,25 @@
+name: "branch-name-enforcer"
+description: "Enforce branch names by validating branch names against valid regexes, and deleting the invalid branch"
+author: "KonstantinZ"
+
+inputs:
+  github_token:
+    description: "GitHub token"
+    required: true
+  ignore_branches:
+    description: "semicolon separated list of branch names to ignore. These branches are expected to be without prefixes! Example: master;release"
+    default: "main;master;teamshare;product_teamshare"
+    required: false
+  regex:
+    # description must include full branch name including prefixes and project name (if applicable)
+    # example '((teamshare)|(feature/[A-Z]*-[0-9]*)|(release/[0-9]{1,2}.[0-9]{1,2}.[0-9]{1,5}))'
+    # this will match 'teamshare' or 'feature/JIRAKEY-123456' or 'release/01.10.12345'
+    description: "Semicolon separated list of Regex patterns"
+    required: true
+  delete_branch:
+    description: "Flag that indicates if invalid branch should be deleted. If set to false - action will exit with an error (failing an action check in the repo), but branch will stay."
+    required: true
+
+runs:
+  using: "node12"
+  main: "dist/index.js"
