@@ -13,10 +13,6 @@ GitHub will send a notification email to the contributor that created non compli
 * __github_token__ - GitHub authentication token, can be passed in as '${{ secrets.GITHUB_TOKEN }}'. Make sure to add write permission to content!
     * required: true
 
-* __ignore_branches__ - semicolon separated list of branch names to ignore (master;release). These branches are expected to be without prefixes!
-    * default: "main;master;teamshare;product_teamshare"
-    * required: false
-
 * __regex__ - Semicolon separated list of Regex patterns to validate the branch name against
     * required: true
 
@@ -42,8 +38,7 @@ jobs:
         uses: A5100907/branch-name-enforcer@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          ignore_branches: "master;main;teamshare;product_teamshare"
-          regex: "^([A-Z0-9]*/)((teamshare)|(feature/[A-Z]*-[0-9]*)|(release/[0-9]{1,2}.[0-9]{1,2}.[0-9]{1,5}$))"
+          regex: "^(master)$|^([A-Z0-9]*/)((teamshare)|(feature/[A-Z]*-[0-9]*)|(release/[0-9]{1,2}.[0-9]{1,2}.[0-9]{1,5}$))"
           delete_branch: "true"
 ```
 #### Example 2:
@@ -64,14 +59,14 @@ jobs:
         uses: A5100907/branch-name-enforcer@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          ignore_branches: "master;main;teamshare;product_teamshare"
-          regex: "^([A-Z0-9]*/)(teamshare);^([A-Z0-9]*/)(feature/[A-Z]*-[0-9]*[-_A-Za-z0-9]*);^([A-Z0-9]*/)(release/[0-9]{1,2}.[0-9]{1,2}.[0-9]{1,5}$)"
+          regex: "^(master)$;^([A-Z0-9]*/)(teamshare)$;^([A-Z0-9]*/)(feature/[A-Z]*-[0-9]*[-_A-Za-z0-9]*);^([A-Z0-9]*/)(release/[0-9]{1,2}.[0-9]{1,2}.[0-9]{1,5}$)"
           delete_branch: "true"
 ```
 Both of these examples would enforce following:
 
   * Valid:
   ```
+  master
   PROJECT/teamshare
   PROJECT/feature/SDO-123456
   PROJECT/feature/XXO-1

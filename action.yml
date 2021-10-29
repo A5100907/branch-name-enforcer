@@ -6,10 +6,6 @@ inputs:
   github_token:
     description: "GitHub token"
     required: true
-  ignore_branches:
-    description: "semicolon separated list of branch names to ignore. These branches are expected to be without prefixes! Example: master;release"
-    default: ""
-    required: false
   regex:
     # description must include full branch name including prefixes and project name (if applicable)
     # example '((teamshare)|(feature/[A-Z]*-[0-9]*)|(release/[0-9]{1,2}.[0-9]{1,2}.[0-9]{1,5}))'

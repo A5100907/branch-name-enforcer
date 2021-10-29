@@ -5,7 +5,6 @@ async function main() {
     // take parameters from a caller
     const token = core.getInput("github_token")
     const octokit = github.getOctokit(token)
-    const ignore_branches = core.getInput("ignore_branches").split(";")
     const regex_patterns = core.getInput("regex").split(";")
     const delete_branch = core.getInput("delete_branch")
 
@@ -14,7 +13,6 @@ async function main() {
         let branch_is_valid = true
 
         core.debug("Running 'main()' ...")
-        core.debug(`ignore_branches=${ignore_branches}`)
         core.debug(`regex_patterns=${regex_patterns}`)
         core.debug(`delete_branch=${delete_branch}`)
         logSeparator()
@@ -31,13 +29,6 @@ async function main() {
         const branch_ref = getBranchRef(github.context)
         const branch_name = getBranchName(branch_ref)
         
-        logSeparator()
-        // checks if branch is in ignore list
-        if (ignoreThisBranch(ignore_branches, branch_name)) {
-            core.info(`Current branch matches ignore condition. Skipping enforcement. Exiting gracefully ...`)
-            return
-        }
-
         logSeparator()
         if (isBranchNameValid(regex_patterns, branch_name)) {
             core.info("Branch passes all check. Exiting gracefully ...")
@@ -124,19 +115,6 @@ function isBranchNameValid(regexes, branch_name) {
         core.error("Contact Fusion DevOps team <fusion_devops@johnsoncontrols365.onmicrosoft.com>")
         throw new Error("isBranchNameValid() failed.")
     }
-}
-
-function ignoreThisBranch(ignores, branch_name) {
-    // Check if current branch should be ignored
-    core.debug("Running 'ignoreThisBranch()' ...")
-    const branch = branch_name
-    core.info(`Branches that should be ignored: ${ignores}`)
-    if (ignores.indexOf(branch) > (-1)){
-        core.info("Current branch is in ignore list.")
-        return true
-    }
-    core.info("Current branch is not in ignore list.")
-    return false
 }
 
 function getBranchRef(context) {
