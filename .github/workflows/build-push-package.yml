@@ -5,7 +5,9 @@ name: "Build application with dependencies and submit full package to the branch
 on:
   push:
     branches:
-      - main
+      - feature/*
+      - hotfix/*
+      - bugfix/*
 jobs:
   build:
     name: "Build and submit"
