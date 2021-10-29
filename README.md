@@ -35,7 +35,7 @@ jobs:
       contents: write
     steps:
       - name: run-enforcer
-        uses: A5100907/branch-name-enforcer@v1
+        uses: A5100907/branch-name-enforcer@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           regex: "^(master)$|^([A-Z0-9]*/)((teamshare)|(feature/[A-Z]*-[0-9]*)|(release/[0-9]{1,2}.[0-9]{1,2}.[0-9]{1,5}$))"
@@ -56,7 +56,7 @@ jobs:
       contents: write
     steps:
       - name: run-enforcer
-        uses: A5100907/branch-name-enforcer@v1
+        uses: A5100907/branch-name-enforcer@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           regex: "^(master)$;^([A-Z0-9]*/)(teamshare)$;^([A-Z0-9]*/)(feature/[A-Z]*-[0-9]*[-_A-Za-z0-9]*);^([A-Z0-9]*/)(release/[0-9]{1,2}.[0-9]{1,2}.[0-9]{1,5}$)"
