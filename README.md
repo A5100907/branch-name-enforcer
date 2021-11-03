@@ -38,12 +38,13 @@ jobs:
         uses: A5100907/branch-name-enforcer@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          regex: "^(master)$|^([A-Z0-9]*/)((teamshare)|(feature/[A-Z]*-[0-9]*)|(release/[0-9]{1,2}.[0-9]{1,2}.[0-9]{1,5}$))"
+          regex: "^(master|teamshare)$;^(feature)/([A-Z0-9]{2,6}-[0-9]{1,8}([-_]{1}[-_a-zA-Z0-9]*)*)$;^(hotfix)/([-_a-zA-Z0-9]*)$;^(release)/([0-9]{1,2}.[0-9]{1,2}.[0-9]{1,2})$"
           delete_branch: "true"
 ```
 #### Example 2:
+For when a repo contains multiple sub-projects, example 'project_1x' and 'project_2x'
 ```
-name: "Branch name enforcer"
+name: "branch_name_enforcer"
 
 on:
   create:
@@ -55,49 +56,10 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: run-enforcer
-        uses: A5100907/branch-name-enforcer@v2
+      - name: run-branch-enforcer
+        uses: A5100907/branch-name-enforcer@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          regex: "^(master)$;^([A-Z0-9]*/)(teamshare)$;^([A-Z0-9]*/)(feature/[A-Z]*-[0-9]*[-_A-Za-z0-9]*);^([A-Z0-9]*/)(release/[0-9]{1,2}.[0-9]{1,2}.[0-9]{1,5}$)"
-          delete_branch: "true"
+          regex: ^(master|product_teamshare)$;^(project_1x|project_2x)/(teamshare)$;^(project_1x|project_2x)/(feature)/([A-Z0-9]{2,6}-[0-9]{1,8}([-_]{1}[-_a-zA-Z0-9]*)*)$;^(project_1x|project_2x)/(hotfix)/([-_a-zA-Z0-9]*)$;^(project_1x|project_2x)/(release)/([0-9]{1,2}.[0-9]{1,2}.[0-9]{1,2})$
+          delete_branch: true
 ```
-Both of these examples would enforce following:
-
-  * Valid:
-  ```
-  master
-  PROJECT/teamshare
-  PROJECT/feature/SDO-123456
-  PROJECT/feature/XXO-1
-  PROJECT/release/2.0.0
-  PROJECT/release/1.0.1
-
-  PRJ1/teamshare
-  PRJ1/feature/SDO-123456
-  PRJ1/feature/XXO-1
-  PRJ1/release/2.0.01234
-  PRJ1/release/1.0.1
-
-  PRJ2/teamshare
-  PRJ2/feature/SDO-123456_test
-  PRJ2/feature/SDO-123456-test
-  PRJ2/feature/SDO-123456_test
-  PRJ2/feature/XXO-1
-  PRJ2/release/2.0.0
-  PRJ2/release/1.0.1
-
-  PRJ9/teamshare
-  PRJ9/feature/SDO-123456
-  PRJ9/feature/XXO-1
-  ```
-
-  * Invalid:
-  ```
-  test_prefix/NEO-PROJECT/teamshare
-  neo-project/teamshare
-  Ex1/teamshare
-  prj2/teamshare-random-suffix
-  PRJ6/feature/SDO123456
-  ExAmPlE/release/01.02.12345-random-suffix
-  ```
